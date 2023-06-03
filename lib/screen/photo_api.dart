@@ -21,7 +21,7 @@ class _PhotoApiState extends State<PhotoApi> {
 
     if (response.statusCode == 200) {
       for (Map i in data) {
-        Photos photos = Photos(title: i['title'], url: i['url']);
+        Photos photos = Photos(title: i['title'], url: i['url'], id: i['id']);
 
         photoList.add(photos);
       }
@@ -53,8 +53,13 @@ class _PhotoApiState extends State<PhotoApi> {
                         );
                       } else {
                         return ListTile(
-                          leading: const CircleAvatar(),
-                          title: Text(snapshot.data![index].title.toString()),
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                snapshot.data![index].url.toString()),
+                          ),
+                          title: Text('Notes id ${snapshot.data![index].id}'),
+                          subtitle:
+                              Text(snapshot.data![index].title.toString()),
                         );
                       }
                     },
