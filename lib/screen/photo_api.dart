@@ -52,14 +52,22 @@ class _PhotoApiState extends State<PhotoApi> {
                           return const Expanded(
                               child: CircularProgressIndicator());
                         } else {
-                          return ListTile(
-                            leading: CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                  snapshot.data![index].url.toString()),
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 6),
+                            child: Card(
+                              elevation: 5,
+                              
+                              child: ListTile(
+                                leading: CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      snapshot.data![index].url.toString()),
+                                ),
+                                title: Text(
+                                    'Notes id ${snapshot.data![index].id}'),
+                                subtitle: Text(
+                                    snapshot.data![index].title.toString()),
+                              ),
                             ),
-                            title: Text('Notes id ${snapshot.data![index].id}'),
-                            subtitle:
-                                Text(snapshot.data![index].title.toString()),
                           );
                         }
                       });

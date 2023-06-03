@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:api_work/screen/user_api.dart';
 import 'package:api_work/screen/photo_api.dart';
 import 'package:api_work/Model/post_model.dart';
+import 'package:api_work/widgets/drawer_tile.dart';
+import 'package:api_work/constant_file.dart/text_style.dart';
 
 class ApiLoading extends StatefulWidget {
   const ApiLoading({super.key});
@@ -42,8 +44,8 @@ class _ApiLoadingState extends State<ApiLoading> {
       drawer: Drawer(
         backgroundColor: Colors.teal,
         child: ListView(
-          children: [
-            const DrawerHeader(
+          children: const [
+            DrawerHeader(
               curve: Curves.decelerate,
               decoration: BoxDecoration(
                 color: Colors.blueGrey,
@@ -58,54 +60,9 @@ class _ApiLoadingState extends State<ApiLoading> {
                 ),
               ),
             ),
-            ListTile(
-              textColor: Colors.white,
-              selectedColor: Colors.amber,
-              title: const Center(
-                child: Text(
-                  'POST API',
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const ApiLoading(),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              textColor: Colors.white,
-              selectedColor: Colors.amber,
-              title: const Center(
-                child: Text(
-                  'PHOTO API',
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const PhotoApi(),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              textColor: Colors.white,
-              selectedColor: Colors.amber,
-              title: const Center(
-                child: Text(
-                  'USER API',
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const UserApi(),
-                  ),
-                );
-              },
-            ),
+            DrawerTile(title: 'POST API', destinstion: ApiLoading()),
+            DrawerTile(title: 'PHOTO API', destinstion: PhotoApi()),
+            DrawerTile(title: 'USER API', destinstion: UserApi()),
           ],
         ),
       ),
@@ -124,38 +81,31 @@ class _ApiLoadingState extends State<ApiLoading> {
                       itemCount: snapshot.data!.length,
                       itemBuilder: ((context, index) {
                         return Padding(
-                          padding: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 7, vertical: 3),
                           child: Card(
                             shape: Border.all(
                                 color: Colors.blueGrey,
-                                width: 2,
-                                strokeAlign: 3),
-                            elevation: 15,
+                                width: 3,
+                                strokeAlign: 1),
+                            elevation: 5,
                             child: Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
-                                    'Title',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                  ),
+                                  const Text('Title',
+                                      style: textStyle // import...
+                                      ),
                                   Text(postList[index].title.toString()),
                                   SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.02,
                                   ),
-                                  const Text(
-                                    'Description',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                  ),
+                                  const Text('Description',
+                                      style: textStyle // imported.
+                                      ),
                                   Text(
                                     postList[index].body.toString(),
                                   ),
