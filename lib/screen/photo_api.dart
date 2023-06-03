@@ -20,6 +20,7 @@ class _PhotoApiState extends State<PhotoApi> {
     var data = jsonDecode(response.body.toString());
 
     if (response.statusCode == 200) {
+      photoList.clear();
       for (Map i in data) {
         Photos photos = Photos(title: i['title'], url: i['url'], id: i['id']);
 
@@ -36,7 +37,7 @@ class _PhotoApiState extends State<PhotoApi> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Photo API'),
+        title: const Text('PHOTO API'),
       ),
       body: Column(
         children: [
@@ -45,25 +46,23 @@ class _PhotoApiState extends State<PhotoApi> {
                 future: getPhoto(),
                 builder: (context, AsyncSnapshot<List<Photos>> snapshot) {
                   return ListView.builder(
-                    itemCount: photoList.length,
-                    itemBuilder: (context, index) {
-                      if (!snapshot.hasData) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else {
-                        return ListTile(
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                snapshot.data![index].url.toString()),
-                          ),
-                          title: Text('Notes id ${snapshot.data![index].id}'),
-                          subtitle:
-                              Text(snapshot.data![index].title.toString()),
-                        );
-                      }
-                    },
-                  );
+                      itemCount: photoList.length,
+                      itemBuilder: (context, index) {
+                        if (!snapshot.hasData) {
+                          return const Expanded(
+                              child: CircularProgressIndicator());
+                        } else {
+                          return ListTile(
+                            leading: CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  snapshot.data![index].url.toString()),
+                            ),
+                            title: Text('Notes id ${snapshot.data![index].id}'),
+                            subtitle:
+                                Text(snapshot.data![index].title.toString()),
+                          );
+                        }
+                      });
                 }),
           )
         ],

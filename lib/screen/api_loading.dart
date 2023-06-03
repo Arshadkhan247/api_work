@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:api_work/screen/user_api.dart';
 import 'package:api_work/screen/photo_api.dart';
 import 'package:api_work/Model/post_model.dart';
 
@@ -62,7 +63,7 @@ class _ApiLoadingState extends State<ApiLoading> {
               selectedColor: Colors.amber,
               title: const Center(
                 child: Text(
-                  'Simple API',
+                  'POST API',
                 ),
               ),
               onTap: () {
@@ -78,7 +79,7 @@ class _ApiLoadingState extends State<ApiLoading> {
               selectedColor: Colors.amber,
               title: const Center(
                 child: Text(
-                  'Photo API',
+                  'PHOTO API',
                 ),
               ),
               onTap: () {
@@ -94,13 +95,13 @@ class _ApiLoadingState extends State<ApiLoading> {
               selectedColor: Colors.amber,
               title: const Center(
                 child: Text(
-                  'Users API',
+                  'USER API',
                 ),
               ),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const ApiLoading(),
+                    builder: (context) => const UserApi(),
                   ),
                 );
               },
@@ -110,19 +111,7 @@ class _ApiLoadingState extends State<ApiLoading> {
       ),
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('API LOADING'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.arrow_forward),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const PhotoApi(),
-                ),
-              );
-            },
-          )
-        ],
+        title: const Text('POST API'),
       ),
       body: Column(
         children: [
