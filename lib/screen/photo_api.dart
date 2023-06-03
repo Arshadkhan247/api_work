@@ -38,8 +38,30 @@ class _PhotoApiState extends State<PhotoApi> {
         centerTitle: true,
         title: const Text('Photo API'),
       ),
-      body: const Column(
-        children: [],
+      body: Column(
+        children: [
+          Expanded(
+            child: FutureBuilder(
+                future: getPhoto(),
+                builder: (context, AsyncSnapshot<List<Photos>> snapshot) {
+                  return ListView.builder(
+                    itemCount: photoList.length,
+                    itemBuilder: (context, index) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        return ListTile(
+                          leading: const CircleAvatar(),
+                          title: Text(snapshot.data![index].title.toString()),
+                        );
+                      }
+                    },
+                  );
+                }),
+          )
+        ],
       ),
     );
   }

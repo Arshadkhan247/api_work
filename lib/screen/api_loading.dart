@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:api_work/screen/photo_api.dart';
 import 'package:api_work/Model/post_model.dart';
 
 class ApiLoading extends StatefulWidget {
@@ -37,18 +38,100 @@ class _ApiLoadingState extends State<ApiLoading> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.teal.shade200,
+      drawer: Drawer(
+        backgroundColor: Colors.teal,
+        child: ListView(
+          children: [
+            const DrawerHeader(
+              curve: Curves.decelerate,
+              decoration: BoxDecoration(
+                color: Colors.blueGrey,
+              ),
+              child: Center(
+                child: Text(
+                  'Arshad khan',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 23),
+                ),
+              ),
+            ),
+            ListTile(
+              textColor: Colors.white,
+              selectedColor: Colors.amber,
+              title: const Center(
+                child: Text(
+                  'Simple API',
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ApiLoading(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              textColor: Colors.white,
+              selectedColor: Colors.amber,
+              title: const Center(
+                child: Text(
+                  'Photo API',
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const PhotoApi(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              textColor: Colors.white,
+              selectedColor: Colors.amber,
+              title: const Center(
+                child: Text(
+                  'Users API',
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ApiLoading(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
         centerTitle: true,
         title: const Text('API LOADING'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.arrow_forward),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const PhotoApi(),
+                ),
+              );
+            },
+          )
+        ],
       ),
       body: Column(
         children: [
-          FutureBuilder(
-              future: getPostApi(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Expanded(
-                    child: ListView.builder(
+          Expanded(
+            child: FutureBuilder(
+                future: getPostApi(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
                       itemCount: snapshot.data!.length,
                       itemBuilder: ((context, index) {
                         return Padding(
@@ -93,14 +176,14 @@ class _ApiLoadingState extends State<ApiLoading> {
                           ),
                         );
                       }),
-                    ),
-                  );
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(color: Colors.green),
-                  );
-                }
-              })
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(color: Colors.green),
+                    );
+                  }
+                }),
+          )
         ],
       ),
     );
